@@ -1,71 +1,43 @@
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+    border: 10px solid blue; 
+}
+.background {
+    background-image: url("/static/davis-hall.jpg"); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
+    background-color: blue;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-header {
-    text-align: center;
-    margin-bottom: 20px;
+.login-container {
+    width: 300px; 
 }
 
-.login-register {
-    background-color: #3498db;
-    color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+h2 {
+    color: white;
+    font-size: 24px; 
 }
 
-.login-register h2 {
-    margin-top: 0;
+label {
+    color: white;
+    font-size: 18px; 
 }
 
-.login-register form {
-    display: flex;
-    flex-direction: column;
+
+input[type="text"],
+input[type="password"] {
+    color: black;
+    font-size: 16px;
 }
 
-.login-register label {
-    margin-bottom: 5px;
-}
 
-.login-register input {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 3px;
-}
-
-.login-register button {
-    background-color: #2980b9;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-.login-register button:hover {
-    background-color: #1c6dad;
-}
-
-.posts {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-}
-
-.posts h2 {
-    margin-top: 0;
-}
