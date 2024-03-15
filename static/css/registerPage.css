@@ -1,0 +1,5 @@
+.background {
+    background-image: url('static/davis-hall.jpg'); /* Adjust the path as necessary */
+    background-size: cover; /* Cover the entire page */
+    background-position: center; /* Center the background image */
+}
