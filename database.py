@@ -19,21 +19,26 @@ def register():
         username = user_data.get("newUsername")
         password = user_data.get("newPassword")
         password_confirm = user_data.get("confirmPassword")
+        # check that all fields were entered
+        if not username or not password or not password_confirm:
+            msg = "Please fill out all fields"
+            flash(msg)
+            return redirect(url_for("/"))
         # check if two passwords match
         if (password != password_confirm):
             msg = "Passwords did not match"
             flash(msg)
-            return redirect("/") ########### not sure yet if this works
+            return redirect(url_for("/")) ########### not sure yet if this works
         # check if user already exists
         if user_collection.find_one({"username":username}):
             msg = "User already exists"
             flash(msg)
-            return redirect("/")
+            return redirect(url_for("/"))
         valid = auth.validate_password(password)
         if valid == False:
             msg = "Password must be at least 8 characters with at least one of each of the following: Uppercase letter, lowercase letter, number, and one of these special characters: {'!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '='}"
             flash(msg)
-            return redirect("/")
+            return redirect(url_for("/"))
         bytes = password.encode('utf-8')
         salt = bcrypt.gensalt()
         hash = bcrypt.hashpw(bytes,salt)
