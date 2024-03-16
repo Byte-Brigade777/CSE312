@@ -14,21 +14,21 @@ user_collection = db["users"]
 @app.route("/register", methods =["POST"]) ##########Argument of type "() -> (Response | None)" cannot be assigned to parameter of type "T_route@route"
 def register():
     msg = ""
-    if request.method == "POST" and "username" in request.form and "password" in request.form and "password_confirm" in request.form:
+    if request.method == "POST" and "newUsername" in request.form and "newPassword" in request.form and "confirmPassword" in request.form:
         user_data = request.get_json()
-        username = user_data.get("username")
-        password = user_data.get("password")
-        password_confirm = user_data.get("password_confirm")
+        username = user_data.get("newUsername")
+        password = user_data.get("newPassword")
+        password_confirm = user_data.get("confirmPassword")
         # check if two passwords match
         if (password != password_confirm):
             msg = "Passwords did not match"
             flash(msg)
-            return redirect("/register") ########### not sure yet if this works
+            return redirect("/") ########### not sure yet if this works
         # check if user already exists
         if user_collection.find_one({"username":username}):
             msg = "User already exists"
             flash(msg)
-            return redirect("/register")
+            return redirect("/")
         valid = auth.validate_password(password)
         if valid == False:
             msg = "Password must be at least 8 characters with at least one of each of the following: Uppercase letter, lowercase letter, number, and one of these special characters: {'!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '='}"
