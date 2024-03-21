@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 50px;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adding grey shadow */
+}
+
+.header {
+    background-color: blue;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.content {
+    padding: 20px;
+}
+
+.post {
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Adding grey shadow */
+}
+
+.post .header {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+.post .username-title {
+    font-weight: bold;
+    margin: 0;
+}
+
+.post .content {
+    padding: 10px;
+}
+
+.user-post-block {
+    position: relative; 
+    z-index: 1; 
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.user-post-header {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.post-title-input,
+.post-content-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-post-button {
+    background-color: darkblue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-post-button:hover {
+    background-color: #3458a1; 
+}
