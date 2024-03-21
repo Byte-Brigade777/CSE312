@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Webpage</title>
+    <link rel="stylesheet" href="../css/poststyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Engineering</div>
+        </div>
+        <div class="content">
+            <h2>Add a Post</h2>
+            <form id="postForm">
+                <input type="text" name="username" id="username" placeholder="Your Username">
+                <input type="text" name="title" id="title" placeholder="Post Title">
+                <textarea name="postContent" id="postContent" rows="4" placeholder="Write your post here..."></textarea>
+                <br>
+                <button type="submit">Submit Post</button>
+            </form>
+            <div id="posts">
+                <!-- Posts will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

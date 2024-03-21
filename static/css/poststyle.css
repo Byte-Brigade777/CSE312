@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Setting a background color for the body */
+}
+
+.container {
+    margin: 50px;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 20px solid transparent; /* Set a transparent border */
+    background-image: url("/static/davis-hall.jpg") 20 round; /* Specify the image URL, width, and border image repeat */
+}
+
+.header {
+    background-color: blue;
+    padding: 20px;
+    border-radius: 20px 20px 20px 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.content {
+    padding: 20px;
+}
