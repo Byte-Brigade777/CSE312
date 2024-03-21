@@ -70,13 +70,19 @@ body {
     margin-bottom: 10px;
 }
 
+.input-container {
+    width: 100%;
+    transition: height 0.3s ease; 
+}
+
 .post-title-input,
 .post-content-input {
-    width: 100%;
+    width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    resize: vertical;
 }
 
 .add-post-button {
@@ -91,4 +97,9 @@ body {
 
 .add-post-button:hover {
     background-color: #3458a1; 
+}
+
+.post-content-input {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px; /* Set a minimum height */
 }
