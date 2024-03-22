@@ -101,6 +101,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const postsContainer = document.getElementById("posts-container");
         postsContainer.innerHTML = "";
     }
+    
+    
+    setInterval(updatePosts, 5000);
+
+
     const addButton = document.querySelector(".add-post-button");
     addButton.addEventListener("click", function() {
         sendPost();
