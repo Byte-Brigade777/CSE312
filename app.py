@@ -5,13 +5,19 @@ from Backend.Login import LoginAndRegistration
 
 app = Flask(__name__, static_url_path='/static') 
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
+
+@app.after_request
+def add_nosniff(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    return response
+
 @app.route("/", methods=["GET"])
 def loginPage():
     
     response = make_response(render_template('/index.html', error=accountInfo.errorMessage))
     accountInfo.errorMessage = ''
     response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['Connection'] = 'keep-alive'
+    response.headers['Contection'] = 'keep-alive'
     response.status_code = 200
     return response
 
@@ -25,7 +31,7 @@ def login():
         response = make_response(render_template('/homePage.html'))
         response.set_cookie('token', info[1], httponly=True, max_age=3600)
         response.headers['X-Content-Type-Options'] = 'nosniff'
-        response.headers['Connection'] = 'keep-alive'
+        response.headers['Contection'] = 'keep-alive'
         return response
     return redirect('/')
 
@@ -34,7 +40,7 @@ def registerPage():
     
     response = make_response(render_template('registerPage.html', error=accountInfo.errorMessage))
     response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['Connection'] = 'keep-alive'
+    response.headers['Contection'] = 'keep-alive'
     response.status_code = 200
     accountInfo.errorMessage = ''
     return response
