@@ -78,7 +78,7 @@ class LoginAndRegistration:
     def cookie_correct(self, request):
         token = request.cookies.get('token')
         if token:
-            info = self.collection().find_one({'token': hashlib.sha512(token.encode()).digest()})
+            info = self.collection.find_one({'token': hashlib.sha512(token.encode()).digest()})
             if info:
                 if info.get('expire') == 'False':
                     return [True, info]

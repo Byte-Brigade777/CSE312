@@ -30,9 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
         request.send();
     }
     
-    const logoutButton = document.querySelector(".logout-button");
-    logoutButton.addEventListener("click", function() {
-        logout();
+    document.addEventListener("DOMContentLoaded", function() {
+        const logoutButton = document.querySelector(".logout-button");
+        logoutButton.addEventListener("click", function() {
+            logout();
+        });
     });
     
     function displayPost(postJSON) {
