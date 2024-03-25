@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
             const postJSON = {"title": title, "content": content};
-            request.open("POST", "/post/add");
+            request.open("POST", "/add");
             request.setRequestHeader("Content-Type", "application/json");
             request.send(JSON.stringify(postJSON));
         }
