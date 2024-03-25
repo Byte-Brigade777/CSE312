@@ -24,12 +24,11 @@ def login_page():
     response = make_response(render_template('/index.html', error=accountInfo.errorMessage))
     accountInfo.errorMessage = ''
     response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['Connection'] = 'keep-alive'
     response.status_code = 200
     return response
 
 
-@app.route('/Login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def home_page():
     name = request.form['username']
     password = request.form['password']
@@ -67,9 +66,13 @@ def actual_home_page():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    accountInfo.logout(request)
-    return redirect('/')
-    
+    if accountInfo.logout(request):
+        response = make_response("Success Logout")
+        response.status_code = 200
+        return response
+    response = make_response("Failed Logout")
+    response.status_code = 404
+    return response
 
 @app.route("/Register", methods=['GET', 'POST'])
 def register_page():
