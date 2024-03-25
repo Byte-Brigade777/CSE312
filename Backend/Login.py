@@ -37,13 +37,13 @@ class LoginAndRegistration:
     def create_account(self, username, password, confirmPassword):
         
         if not self.same_password(password, confirmPassword):
-            self.errorMessage = 'Password and Confirm Password dont match'
+            self.errorMessage = 'Password and Confirm Password don\'t match'
             return False
         if self.existingAccount(username)[0]:
             self.errorMessage = 'Username already taken'
             return False
         if not self.strongPassword(password):
-            self.errorMessage = 'Password must be 8 Character minimum'
+            self.errorMessage = 'Password must be at least 8 characters'
             return False
         hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
         self.collection.insert_one({'username': username, 'password': hashedPassword, 'token':"N/A", 'xref':'N/A'})
