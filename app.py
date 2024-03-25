@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, url_for, request, redirect, Response, make_response
+from flask import Flask, jsonify, render_template, url_for, request, redirect, Response, make_response, send_from_directory
 from pymongo import MongoClient
 from Backend.database import loginAndRegisterDataBase, postContent
 from Backend.Login import LoginAndRegistration
@@ -104,7 +104,10 @@ def sendPost():
     listOfMessage = post_info.sendPost(request)
     return jsonify(listOfMessage)
 
-
+# @app.route('/static/js/script.js', methods=["POST",'GET'])
+# def sendJS():
+#     pass
+    
 if __name__ == "__main__":
     # Please do not set debug=True in production
     app.run(host="0.0.0.0", port=8080, debug=True)
