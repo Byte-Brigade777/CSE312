@@ -94,7 +94,7 @@ class LoginAndRegistration:
         return False
     
     def findUserName(self, cookie): 
-        info = self.collection().find_one({'token': hashlib.sha512(cookie.encode()).digest()})
+        info = self.c().find_one({'token': hashlib.sha512(cookie.encode()).digest()})
         if info:
             return info.get('username')
         return None
