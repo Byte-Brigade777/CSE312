@@ -4,11 +4,11 @@ import uuid
 from pymongo import MongoClient
 
 
-def loginAndRegisterDataBase():
-    client = MongoClient("mongo")
-    db = client["login"]
-    collection = db["login"]
-    return collection
+# def loginAndRegisterDataBase():
+#     client = MongoClient("mongo")
+#     db = client["login"]
+#     collection = db["login"]
+#     return collection
 
 
 class LoginAndRegistration:
@@ -78,7 +78,7 @@ class LoginAndRegistration:
     def cookie_correct(self, request):
         token = request.cookies.get('token')
         if token:
-            info = loginAndRegisterDataBase().find_one({'token': hashlib.sha512(token.encode()).digest()})
+            info = self.collection().find_one({'token': hashlib.sha512(token.encode()).digest()})
             if info:
                 if info.get('expire') == 'False':
                     return [True, info]
@@ -94,7 +94,7 @@ class LoginAndRegistration:
         return False
     
     def findUserName(self, cookie): 
-        info = loginAndRegisterDataBase().find_one({'token': hashlib.sha512(cookie.encode()).digest()})
+        info = self.collection().find_one({'token': hashlib.sha512(cookie.encode()).digest()})
         if info:
             return info.get('username')
         return None
