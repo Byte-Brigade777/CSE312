@@ -89,7 +89,7 @@ def sign_up():
 
     return redirect('/Register')
 
-@app.route('/post/add', methods=['POST', "GET"])
+@app.route('/add', methods=['POST', "GET"])
 def addContent():
     
     post_info.storeRequest(request)
@@ -106,7 +106,9 @@ def sendPost():
 
 # @app.route('/static/js/script.js', methods=["POST",'GET'])
 # def sendJS():
-#     pass
+#
+#     return send_from_directory('css', , mimetype='text/css')
+
     
 if __name__ == "__main__":
     # Please do not set debug=True in production
