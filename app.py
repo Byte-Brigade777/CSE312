@@ -5,6 +5,12 @@ from Backend.Login import LoginAndRegistration
 
 app = Flask(__name__, static_url_path='/static') 
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
+
+@app.after_request
+def add_nosniff(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    return response
+
 @app.route("/", methods=["GET"])
 def loginPage():
     
