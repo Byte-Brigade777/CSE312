@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, render_template, url_for, request, redirect, Response, make_response
 from pymongo import MongoClient
-from Backend.database import loginAndRegisterDataBase
+from Backend.database import loginAndRegisterDataBase, postContent
 from Backend.Login import LoginAndRegistration
+from Backend.postInformation import StoreInformation
 import logging
 
 app = Flask(__name__, static_url_path='/static')
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
+post_info = StoreInformation(postContent(), accountInfo)
 
 @app.after_request
 def add_nosniff(response):
@@ -15,10 +17,8 @@ def add_nosniff(response):
 @app.route("/", methods=["GET"])
 def login_page():
     
-    app.logger.info(accountInfo.cookie_correct(request))
     if accountInfo.cookie_correct(request)[0] == True:
         app.logger.info('Triggered this conditation for some reason')
-
         return redirect('/Home')
     
     response = make_response(render_template('/index.html', error=accountInfo.errorMessage))
@@ -26,7 +26,6 @@ def login_page():
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.status_code = 200
     return response
-
 
 @app.route('/login', methods=['POST'])
 def home_page():
@@ -38,7 +37,6 @@ def home_page():
         return redirect('/Home')
     
     return redirect('/')
-
     
 @app.route('/Home', methods=['GET','POST'])
 def actual_home_page():
@@ -54,7 +52,6 @@ def actual_home_page():
         return response
     
     if logInformation[0] == True: 
-        app.logger.info(f'True is Triggered {logInformation[0]}')
         response = make_response(render_template('/homePage.html', Username = accountInfo.name))
         response.set_cookie('token', accountInfo.messageId, httponly=True, max_age=3600)
         response.headers['X-Content-Type-Options'] = 'nosniff'
@@ -63,7 +60,6 @@ def actual_home_page():
     
     return redirect('/')
         
-
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     if accountInfo.logout(request):
@@ -92,6 +88,22 @@ def sign_up():
         return redirect('/')
 
     return redirect('/Register')
+
+@app.route('/post/add', methods=['POST', "GET"])
+def addContent():
+    
+    post_info.storeRequest(request)
+    response = make_response("Successfully added")
+    response.status_code = 201
+    return response
+
+    
+    
+@app.route('/posts', methods=["POST", "GET"])
+def sendPost():
+    listOfMessage = post_info.sendPost(request)
+    return jsonify(listOfMessage)
+
 
 if __name__ == "__main__":
     # Please do not set debug=True in production
