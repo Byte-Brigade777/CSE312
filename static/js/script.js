@@ -17,6 +17,22 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     }
+
+    function logout() {
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log("Logout successful");
+            }
+        }
+        request.open("GET", "/logout");
+        request.send();
+    }
+
+    const logoutButton = document.querySelector(".logout-button");
+    logoutButton.addEventListener("click", function() {
+        logout();
+    });
     
     function displayPost(postJSON) {
         const postsContainer = document.getElementById("posts-container");
