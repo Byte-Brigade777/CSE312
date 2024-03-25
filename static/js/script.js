@@ -30,11 +30,9 @@ document.addEventListener("DOMContentLoaded", function() {
         request.send();
     }
     
-    document.addEventListener("DOMContentLoaded", function() {
-        const logoutButton = document.querySelector(".logout-button");
-        logoutButton.addEventListener("click", function() {
-            logout();
-        });
+    const logoutButton = document.querySelector(".logout-button");
+    logoutButton.addEventListener("click", function() {
+        logout();
     });
     
     function displayPost(postJSON) {
@@ -89,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
             const postJSON = {"title": title, "content": content};
-            request.open("POST", "/add");
+            request.open("POST", "/post/add");
             request.setRequestHeader("Content-Type", "application/json");
             request.send(JSON.stringify(postJSON));
         }
