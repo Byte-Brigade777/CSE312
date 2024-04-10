@@ -5,11 +5,15 @@ from Backend.database import loginAndRegisterDataBase, postContent
 from Backend.Login import LoginAndRegistration
 from Backend.postInformation import StoreInformation
 import logging
+import os
 
 app = Flask(__name__, static_url_path='/static')
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
 post_info = StoreInformation(postContent(), accountInfo)
 
+# Specify the upload directory for when images are uploaded
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.after_request
 def add_nosniff(response):
@@ -121,6 +125,26 @@ def addContent():
 def send_post():
     listOfMessage = post_info.sendPost(request)
     return jsonify(listOfMessage)
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # Check if the POST request has the file part
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an empty file without a filename
+        if file.filename == '':
+            return redirect(request.url)
+        if file:
+            # Ensure the upload directory exists
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            # Save the uploaded file to the upload directory
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(file_path)
+            return 'File uploaded successfully'
+    return render_template('upload.html')
 
 
 # @app.route('/static/js/<path:filename>')
