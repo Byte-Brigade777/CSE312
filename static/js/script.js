@@ -118,6 +118,30 @@ document.addEventListener("DOMContentLoaded", function() {
         const postsContainer = document.getElementById("posts-container");
         postsContainer.innerHTML = "";
     }
+
+    function uploadFile() {
+        const fileInput = document.getElementById("file-upload").files[0];
+        if (!fileInput) {
+            console.error("No file selected.");
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append("file", fileInput);
+    
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    console.log("File uploaded successfully");
+                } else {
+                    console.error("Error uploading file");
+                }
+            }
+        };
+        request.open("POST", "/upload");
+        request.send(formData);
+    }
     
     
     setInterval(updatePosts, 5000);
@@ -126,6 +150,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const addButton = document.querySelector(".add-post-button");
     addButton.addEventListener("click", function() {
         sendPost();
+    });
+    
+
+    const uploadButton = document.getElementById("upload-button");
+    uploadButton.addEventListener("click", function() {
+        uploadFile();
     });
 });
 
