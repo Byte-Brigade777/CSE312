@@ -6,13 +6,14 @@ from Backend.Login import LoginAndRegistration
 from Backend.postInformation import StoreInformation
 import logging
 import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_url_path='/static')
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
 post_info = StoreInformation(postContent(), accountInfo)
 
 # Specify the upload directory for when images are uploaded
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = '/static/img'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.after_request
@@ -140,11 +141,17 @@ def upload_file():
         if file:
             # Ensure the upload directory exists
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            if not allowed_file(file.filename):
+                return redirect(request.url)
             # Save the uploaded file to the upload directory
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            filename=secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            return 'File uploaded successfully'
+            return jsonify({'message': 'File uploaded successfully', 'filename': filename})
     return render_template('upload.html')
+def allowed_file(filename):
+  ALLOWED_EXTENSIONS = {'jpg'}
+  return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 # @app.route('/static/js/<path:filename>')

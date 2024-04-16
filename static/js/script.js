@@ -70,28 +70,71 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Both title and content must be provided.");
             return;
         }
+
+        // Check if a file is selected
+        const fileInput = document.getElementById("file-upload");
+        const hasFile = fileInput.files.length > 0;
+        let uploadCompleted=false;
+        const postJSON = { title, content };
+
+        if (hasFile) {
+            // Call uploadFile to handle image upload
+            uploadFile();
+            // while (!uploadCompleted){} // wait for upload to complete
+            if (uploadResponse.success) {
+                postJSON.filename = uploadResponse.filename; // Add filename if upload successful
+            }
+        }
         
-        if (ws) {
-            // Using WebSockets
-            socket.send(JSON.stringify({'messageType': 'postMessage', 'title': title, 'content': content}));
-        } else {
-            // Using AJAX
-            const request = new XMLHttpRequest();
-            request.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
+        
+        // if (ws) {
+        //     // Using WebSockets
+        //     socket.send(JSON.stringify({'messageType': 'postMessage', 'title': title, 'content': content}));
+        // } 
+     
+                // Send the post data (including filename) using AJAX
+                const request = new XMLHttpRequest();
+                request.onreadystatechange = function () {
+                  if (this.readyState === 4 && this.status === 200) {
                     console.log(this.response);
                     // If successful, refresh posts
                     updatePosts();
                     // Clear input fields
                     clearInputFields(titleInput, contentInput);
-                }
-            }
-            const postJSON = {"title": title, "content": content};
-            request.open("POST", "/post/add");
-            request.setRequestHeader("Content-Type", "application/json");
-            request.send(JSON.stringify(postJSON));
-        }
-    }
+                  } else {
+                    console.error("Error uploading image");
+                  }
+                };
+                const postJSONString = JSON.stringify(postJSON);
+                request.open("POST", "/add");
+                request.setRequestHeader("Content-Type", "application/json");
+                request.send(postJSONString);
+                clearInputFields(titleInput, contentInput);
+                uploadCompleted = false;
+              } 
+            
+            
+            
+            
+            
+            
+            
+            // // Using AJAX
+            // const request = new XMLHttpRequest();
+            // request.onreadystatechange = function () {
+            //     if (this.readyState === 4 && this.status === 200) {
+            //         console.log(this.response);
+            //         // If successful, refresh posts
+            //         updatePosts();
+            //         // Clear input fields
+            //         clearInputFields(titleInput, contentInput);
+            //     }
+            // }
+            // const postJSON = {"title": title, "content": content};
+            // request.open("POST", "/post/add");
+            // request.setRequestHeader("Content-Type", "application/json");
+            // request.send(JSON.stringify(postJSON));
+
     
     function clearInputFields(...inputs) {
         inputs.forEach(input => {
@@ -118,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const postsContainer = document.getElementById("posts-container");
         postsContainer.innerHTML = "";
     }
-
+    let uploadCompleted=false;
     function uploadFile() {
         const fileInput = document.getElementById("file-upload").files[0];
         if (!fileInput) {
@@ -133,8 +176,12 @@ document.addEventListener("DOMContentLoaded", function() {
         request.onreadystatechange = function () {
             if (this.readyState === 4) {
                 if (this.status === 200) {
+                    const response = JSON.parse(this.response);
+                    uploadResponse = {success: true,filename: response.filename ? response.filename : null};
+                    uploadCompleted=true;
                     console.log("File uploaded successfully");
                 } else {
+                    uploadResponse = { success: false };
                     console.error("Error uploading file");
                 }
             }

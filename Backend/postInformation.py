@@ -10,7 +10,8 @@ class StoreInformation:
         token = request.cookies.get('token')
         username = self.account.findUserName(token)
         json = request.json
-        self.collection.insert_one({'username': username, 'title': json['title'], 'content': json['content']})
+        upload_name = request.json.get('filename')
+        self.collection.insert_one({'username': username, 'title': json['title'], 'content': json['content'], 'url':upload_name if upload_name else None})
         return
     
     def sendPost(self, request):
