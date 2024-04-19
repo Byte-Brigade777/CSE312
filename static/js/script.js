@@ -36,33 +36,49 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     function displayPost(postJSON) {
+        console.log("Displaying post:", postJSON);  // Debug: Log post data to console
+
         const postsContainer = document.getElementById("posts-container");
         const postElement = document.createElement("div");
         postElement.classList.add("post");
-    
+
         const headerElement = document.createElement("div");
         headerElement.classList.add("header");
-    
+
         const usernameTitleElement = document.createElement("p");
         usernameTitleElement.classList.add("username-title");
         usernameTitleElement.textContent = postJSON.username + ": " + postJSON.title;
-    
+
         const contentElement = document.createElement("p");
         contentElement.classList.add("content");
         contentElement.textContent = postJSON.content;
-    
+
         headerElement.appendChild(usernameTitleElement);
         postElement.appendChild(headerElement);
         postElement.appendChild(contentElement);
-    
+
+        if (postJSON.url) {
+            const imageElement = document.createElement("img");
+            imageElement.src = '/static/img/' + postJSON.url;
+            imageElement.alt = "Post Image";
+            imageElement.style.width = '100%';
+            imageElement.onerror = function () {
+                console.error("Error loading image at", this.src); 
+                this.style.display = 'none'; 
+            };
+            postElement.appendChild(imageElement);
+        }
+
         postsContainer.appendChild(postElement);
     }
+
+
     
     function sendPost() {
         const titleInput = document.querySelector(".post-title-input");
         const contentInput = document.querySelector(".post-content-input");
         
-        // Retrieve values
+    
         const title = titleInput.value;
         const content = contentInput.value;
         
@@ -71,19 +87,17 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Check if a file is selected
+
         const fileInput = document.getElementById("file-upload");
         const hasFile = fileInput.files.length > 0;
         let uploadCompleted=false;
         const postJSON = { title, content };
 
         if (hasFile) {
-            // Call uploadFile to handle image upload
             uploadFile();
-            // while (!uploadCompleted){} // wait for upload to complete
             if (uploadResponse.success) {
                 console.log("File uploaded successfully");
-                postJSON.filename = uploadResponse.filename; // Add filename if upload successful
+                postJSON.filename = uploadResponse.filename; 
             }
         }
         

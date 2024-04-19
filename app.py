@@ -12,10 +12,14 @@ app = Flask(__name__, static_url_path='/static')
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
 post_info = StoreInformation(postContent(), accountInfo)
 
-# Specify the upload directory for when images are uploaded
-UPLOAD_FOLDER = '/static/img'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+UPLOAD_FOLDER = 'static/img'
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, UPLOAD_FOLDER)
 
+
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    
+    
 @app.after_request
 def add_nosniff(response):
     info = response.headers.get("Content-Disposition")
@@ -140,11 +144,16 @@ def upload_file():
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            return jsonify({'message': 'File uploaded successfully', 'filename': filename}), 200
+            try:
+                file.save(file_path)
+                return jsonify({'message': 'File uploaded successfully', 'filename': filename}), 200
+            except Exception as e:
+                app.logger.error(f'Failed to save file: {str(e)}')
+                return jsonify({'message': f'Error saving file: {str(e)}'}), 500
         return jsonify({'message': 'File type not allowed'}), 400
     elif request.method == 'GET':
         return render_template('upload.html')
+
 def allowed_file(filename):
   ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
