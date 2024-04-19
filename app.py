@@ -131,26 +131,22 @@ def send_post():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # Check if the POST request has the file part
         if 'file' not in request.files:
-            return redirect(request.url)
+            return jsonify({'message': 'No file part in the request'}), 400
         file = request.files['file']
-        # If the user does not select a file, the browser submits an empty file without a filename
         if file.filename == '':
-            return redirect(request.url)
-        if file:
-            # Ensure the upload directory exists
+            return jsonify({'message': 'No file selected'}), 400
+        if file and allowed_file(file.filename):
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            if not allowed_file(file.filename):
-                return redirect(request.url)
-            # Save the uploaded file to the upload directory
-            filename=secure_filename(file.filename)
+            filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            return jsonify({'message': 'File uploaded successfully', 'filename': filename})
-    return render_template('upload.html')
+            return jsonify({'message': 'File uploaded successfully', 'filename': filename}), 200
+        return jsonify({'message': 'File type not allowed'}), 400
+    elif request.method == 'GET':
+        return render_template('upload.html')
 def allowed_file(filename):
-  ALLOWED_EXTENSIONS = {'jpg'}
+  ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 

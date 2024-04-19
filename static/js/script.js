@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
             uploadFile();
             // while (!uploadCompleted){} // wait for upload to complete
             if (uploadResponse.success) {
+                console.log("File uploaded successfully");
                 postJSON.filename = uploadResponse.filename; // Add filename if upload successful
             }
         }

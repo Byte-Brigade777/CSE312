@@ -1,10 +1,12 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Webpage</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/mainstyle.css')}}">
 </head>
+
 <body>
     <script type='application/javascript' src="{{url_for('static', filename='js/script.js')}}"></script>
 
@@ -18,18 +20,24 @@
         </div>
         <!-- User Input -->
         <div class="user-post-block">
-            <div class="user-post-header">
-                {{Username}}
-            </div>
-            <div class="input-container"> <!-- New container for input elements -->
-                <input type="text" placeholder="Title" class="post-title-input">
-                <textarea placeholder="Content" class="post-content-input"></textarea>
+            <form method="POST" enctype="multipart/form-data"> <!-- Added form with multipart/form-data encoding -->
+                <div class="user-post-header">
+                    {{Username}}
+                </div>
+                <div class="input-container"> <!-- New container for input elements -->
+                    <input type="text" placeholder="Title" class="post-title-input">
+                    <textarea placeholder="Content" class="post-content-input"></textarea>
 
-                <input type="file" id="file-upload" accept="image/*" class="file-upload-input">
-                <button id="upload-button">Upload</button>
-            </div>
-            <button class="add-post-button">Add Post</button>
+                    <input type="file" id="file-upload" accept=".jpeg, .jpg" class="file-upload-input">
+                    <!-- Restrict file type to JPEG -->
+                    <button type="button" id="upload-button">Upload</button>
+                    <!-- Changed button type to 'button' if you handle upload via JavaScript -->
+                </div>
+                <button class="add-post-button" type="submit">Add Post</button>
+                <!-- Ensure this is a submit button for the form -->
+            </form>
         </div>
     </div>
 </body>
+
 </html>
