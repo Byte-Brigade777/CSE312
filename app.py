@@ -1,14 +1,18 @@
 from flask import Flask, jsonify, render_template, url_for, request, redirect, Response, make_response, \
-    send_from_directory, send_file
+    send_from_directory, send_file, session
 from pymongo import MongoClient
 from Backend.database import loginAndRegisterDataBase, postContent
 from Backend.Login import LoginAndRegistration
 from Backend.postInformation import StoreInformation
+import bcrypt
+import hashlib
+import uuid
 import logging
 import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_url_path='/static')
+app.secret_key = os.urandom(24) # secret key for session managing
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
 post_info = StoreInformation(postContent(), accountInfo)
 
@@ -58,6 +62,7 @@ def home_page():
     info = accountInfo.login(name, password)
 
     if info[0]:
+        session['username'] = name # store the username in the session
         return redirect('/Home')
 
     return redirect('/')
@@ -88,13 +93,11 @@ def actual_home_page():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    if accountInfo.logout(request):
-        response = make_response("Success Logout")
-        response.status_code = 200
-        return response
-    response = make_response("Failed Logout")
-    response.status_code = 404
-    return response
+    if accountInfo.logout==True:
+        session.pop('username',None) # remove username from the session
+        return redirect('/')
+    else:
+        return redirect('/')
 
 
 @app.route("/Register", methods=['GET', 'POST'])
@@ -123,7 +126,7 @@ def addContent():
     post_info.storeRequest(request)
     response = make_response("Successfully added")
     response.status_code = 201
-    return response
+    return redirect('/Home')
 
 
 @app.route('/posts', methods=["POST", "GET"])

@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function redirectToLogin() {
-        var currentUrl = window.location.href;
-        var baseUrl = currentUrl.split('/').slice(0, 3).join('/'); // Extract base URL (protocol://domain:port)
-        window.location.href = baseUrl; 
+        window.location.href = "http://localhost:8080/"; 
     }
 });

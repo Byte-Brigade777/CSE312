@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         request.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 console.log("Logout successful");
-                window.location.href = "http://localhost:8080"; 
+                window.location.href = "/"; 
             }
         }
         request.open("GET", "/logout");
