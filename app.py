@@ -94,6 +94,7 @@ def logout():
         return response
     response = make_response("Failed Logout")
     response.status_code = 404
+    return redirect('/')
     return response
 
 
