@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function redirectToHome() {
-        window.location.href = currentDomain + '/Register';
+        var currentUrl = window.location.href;
+        var baseUrl = currentUrl.split('/').slice(0, 3).join('/'); // Extract base URL (protocol://domain:port)
+        window.location.href = baseUrl + '/Register';
     }
 });
