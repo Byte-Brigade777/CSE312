@@ -6,6 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function redirectToHome() {
-        window.location.href = 'http://127.0.0.1:8080/Register';
+        window.location.href = 'http://localhost:8080/Register';
     }
 });
