@@ -91,10 +91,10 @@ def logout():
     if accountInfo.logout(request):
         response = make_response("Success Logout")
         response.status_code = 200
+        return redirect('/')
         return response
     response = make_response("Failed Logout")
-    response.status_code = 404
-    return redirect('/')
+    response.status_code = 404 
     return response
 
 
