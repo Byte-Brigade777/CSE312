@@ -58,7 +58,10 @@ def home_page():
     info = accountInfo.login(name, password)
 
     if info[0]:
-        return redirect('/Home')
+        response = make_response(redirect('/Home'))
+     
+        response.set_cookie('token', info[1], httponly=True, max_age=3600)
+        return response
 
     return redirect('/')
 
@@ -66,21 +69,9 @@ def home_page():
 @app.route('/Home', methods=['GET', 'POST'])
 def actual_home_page():
     logInformation = accountInfo.cookie_correct(request)
-    app.logger.info(accountInfo.messageId)
 
-    if accountInfo.count == 1:
-        accountInfo.count = 0
-        response = make_response(render_template('/homePage.html', Username=accountInfo.name))
-        response.set_cookie('token', accountInfo.messageId, httponly=True, max_age=3600)
-        response.headers['X-Content-Type-Options'] = 'nosniff'
-        response.headers['Connection'] = 'keep-alive'
-        return response
-
-    if logInformation[0] == True:
-        response = make_response(render_template('/homePage.html', Username=accountInfo.name))
-        response.set_cookie('token', accountInfo.messageId, httponly=True, max_age=3600)
-        response.headers['X-Content-Type-Options'] = 'nosniff'
-        response.headers['Connection'] = 'keep-alive'
+    if logInformation[0]:
+        response = make_response(render_template('/homePage.html', Username=logInformation[1]['username']))
         return response
 
     return redirect('/')
