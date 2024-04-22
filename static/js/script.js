@@ -23,7 +23,11 @@ document.addEventListener("DOMContentLoaded", function() {
         request.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 console.log("Logout successful");
-                window.location.href = "http://localhost:8080"; 
+                // window.location.href = "http://localhost:8080"; 
+                // change this path to the same as used in register.js
+                var currentUrl = window.location.href;
+                var baseUrl = currentUrl.split('/').slice(0, 3).join('/'); // Extract base URL (protocol://domain:port)
+                window.location.href = baseUrl;
             }
         }
         request.open("GET", "/logout");
