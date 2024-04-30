@@ -136,26 +136,27 @@ body {
 .dark-mode body {
     margin: 0;
     padding: 0;
-    color: black; 
-    background-color: #506477; 
+    color: white; 
+    background-color: #383838; 
 }
 
 .dark-mode .container {
     margin: 50px;
-    background-color: #506477;
+    background-color: #383838;
+    color: white;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0px 0px 10px rgba(177, 176, 176, 0.5); 
 }
 
 .dark-mode .header {
-    background-color: #7390aa;
+    background-color: #212121;
     padding: 20px;
     border-radius: 20px 20px 0 0;
 }
 
 .dark-mode .logo {
-    color: #27e8a7;
+    color: #6fe2ff;
     font-size: 24px;
     font-weight: bold;
 }
@@ -165,15 +166,15 @@ body {
 }
 
 .dark-mode .post {
-    background-color: #506477;
+    background-color: #383838;
     border-radius: 10px;
     margin-bottom: 20px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0px 0px 5px rgba(177, 176, 176, 0.3); 
 }
 
 .dark-mode .post .header {
-    background-color: #7390aa;
-    color: #27e8a7;
+    background-color: #212121;
+    color: #6fe2ff;
     padding: 10px;
     border-radius: 10px 10px 0 0;
 }
@@ -191,16 +192,17 @@ body {
     position: relative; 
     z-index: 1; 
     margin: 20px;
-    background-color: #506477;
+    background-color: #383838;
+    color: white;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px rgba(177, 176, 176, 0.5);
     padding: 20px;
 }
 
 .dark-mode.user-post-header {
-    background-color: #7390aa;
-    color: #27e8a7;
+    background-color: #212121;
+    color: #6fe2ff;
     padding: 10px;
     border-radius: 10px 10px 0 0;
     font-weight: bold;
@@ -208,12 +210,16 @@ body {
 }
 
 .dark-mode.input-container {
+    background-color: #383838;
+    color: white;
     width: 100%;
     transition: height 0.3s ease; 
 }
 
 .dark-mode.post-title-input,
 .dark-mode.post-content-input {
+    background-color: #383838;
+    color: white;
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 10px;
@@ -223,7 +229,7 @@ body {
 }
 
 .dark-mode.add-post-button {
-    background-color: #add7ff;
+    background-color: #626263;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -233,15 +239,20 @@ body {
 }
 
 .dark-mode .add-post-button:hover {
-    background-color: #2300d0; 
+    background-color: #626263; 
+    color: white;
 }
 
 .dark-mode .post-content-input {
+    background-color: #626263; 
+    color: white;
     resize: vertical; 
     min-height: 100px; 
 }
 
 .dark-mode .header {
+    background-color: #212121;
+    color: #6fe2ff;
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
@@ -249,7 +260,7 @@ body {
 
 
 .dark-mode .logout-button {
-    background-color: #add7ff; 
+    background-color: #626263; 
     color: white;
     padding: 10px 20px;
     border: none;
