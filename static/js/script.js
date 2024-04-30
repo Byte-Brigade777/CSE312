@@ -226,6 +226,11 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.classList.toggle("dark-mode");
     });
 
+    const gamerModeToggle = document.getElementById("gamer-mode-toggle");
+
+    gamerModeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("gamer-mode");
+    })
 
 });
 
