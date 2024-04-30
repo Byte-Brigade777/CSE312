@@ -126,3 +126,141 @@ body {
     background-color: #0d6385; 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
 }
+
+
+
+
+
+
+/* dark-mode */
+.dark-mode body {
+    margin: 0;
+    padding: 0;
+    color: black; 
+    background-color: #506477; 
+}
+
+.dark-mode .container {
+    margin: 50px;
+    background-color: #506477;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
+}
+
+.dark-mode .header {
+    background-color: #7390aa;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+}
+
+.dark-mode .logo {
+    color: #27e8a7;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.dark-mode .content {
+    padding: 20px;
+}
+
+.dark-mode .post {
+    background-color: #506477;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); 
+}
+
+.dark-mode .post .header {
+    background-color: #7390aa;
+    color: #27e8a7;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+.dark-mode .post .username-title {
+    font-weight: bold;
+    margin: 0;
+}
+
+.dark-mode .post .content {
+    padding: 10px;
+}
+
+.dark-mode.user-post-block {
+    position: relative; 
+    z-index: 1; 
+    margin: 20px;
+    background-color: #506477;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.dark-mode.user-post-header {
+    background-color: #7390aa;
+    color: #27e8a7;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.dark-mode.input-container {
+    width: 100%;
+    transition: height 0.3s ease; 
+}
+
+.dark-mode.post-title-input,
+.dark-mode.post-content-input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.dark-mode.add-post-button {
+    background-color: #add7ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dark-mode .add-post-button:hover {
+    background-color: #2300d0; 
+}
+
+.dark-mode .post-content-input {
+    resize: vertical; 
+    min-height: 100px; 
+}
+
+.dark-mode .header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+
+.dark-mode .logout-button {
+    background-color: #add7ff; 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); 
+}
+
+.dark-mode .logout-button:hover {
+    background-color: #2300d0; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
+}
+

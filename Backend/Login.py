@@ -100,6 +100,15 @@ class LoginAndRegistration:
         return None
         
         
+    def update_dark_mode_preference(self, username, dark_mode_enabled):
+        self.collection.update_one({'username': username}, {'$set': {'dark_mode_enabled': dark_mode_enabled}})
+
+    def get_dark_mode_preference(self, username):
+        user = self.collection.find_one({'username': username})
+        if user:
+            return user.get('dark_mode_enabled', False)
+        return False  # False if preference not found
+        
 
         
             
