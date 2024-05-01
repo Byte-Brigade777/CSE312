@@ -7,6 +7,7 @@ from Backend.postInformation import StoreInformation
 import logging
 import os
 from werkzeug.utils import secure_filename
+import html
 
 app = Flask(__name__, static_url_path='/static')
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
@@ -111,7 +112,11 @@ def sign_up():
 
 @app.route('/add', methods=['POST', "GET"])
 def addContent():
-    post_info.storeRequest(request)
+    post_data = request.get_json()
+    title = html.escape(post_data.get("title",""))
+    content = html.escape(post_data.get("content",""))
+    filename = post_data.get('filename','')
+    post_info.storeRequest(title,content,filename)
     response = make_response("Successfully added")
     response.status_code = 201
     return response
