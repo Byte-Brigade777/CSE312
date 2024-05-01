@@ -116,7 +116,7 @@ def addContent():
     title = html.escape(post_data.get("title",""))
     content = html.escape(post_data.get("content",""))
     filename = post_data.get('filename','')
-    post_info.storeRequest(title,content,filename)
+    post_info.storeRequest(title,content,filename,request)
     response = make_response("Successfully added")
     response.status_code = 201
     return response

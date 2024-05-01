@@ -6,7 +6,7 @@ class StoreInformation:
         self.account = account
         
         
-    def storeRequest(self, title,content,filename):
+    def storeRequest(self, title,content,filename,request):
         token = request.cookies.get('token')
         username = self.account.findUserName(token)
         # json = request.json
