@@ -1,5 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
+    
     const ws = false;
     let socket = null;
     function initWS() {
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     function displayPost(postJSON) {
-        console.log("Displaying post:", postJSON);  // Debug: Log post data to console
+        console.log("Displaying post:", postJSON);
 
         const postsContainer = document.getElementById("posts-container");
         const postElement = document.createElement("div");
@@ -100,21 +101,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 postJSON.filename = uploadResponse.filename; 
             }
         }
-        
-        
-        // if (ws) {
-        //     // Using WebSockets
-        //     socket.send(JSON.stringify({'messageType': 'postMessage', 'title': title, 'content': content}));
-        // } 
-     
-                // Send the post data (including filename) using AJAX
+             
                 const request = new XMLHttpRequest();
                 request.onreadystatechange = function () {
                   if (this.readyState === 4 && this.status === 200) {
                     console.log(this.response);
-                    // If successful, refresh posts
                     updatePosts();
-                    // Clear input fields
                     clearInputFields(titleInput, contentInput);
                   } else {
                     console.error("Error uploading image");
@@ -131,24 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             
             
-            
-            
-            
-            // // Using AJAX
-            // const request = new XMLHttpRequest();
-            // request.onreadystatechange = function () {
-            //     if (this.readyState === 4 && this.status === 200) {
-            //         console.log(this.response);
-            //         // If successful, refresh posts
-            //         updatePosts();
-            //         // Clear input fields
-            //         clearInputFields(titleInput, contentInput);
-            //     }
-            // }
-            // const postJSON = {"title": title, "content": content};
-            // request.open("POST", "/post/add");
-            // request.setRequestHeader("Content-Type", "application/json");
-            // request.send(JSON.stringify(postJSON));
+
 
     
     function clearInputFields(...inputs) {
@@ -219,5 +194,32 @@ document.addEventListener("DOMContentLoaded", function() {
     uploadButton.addEventListener("click", function() {
         uploadFile();
     });
+
+    const timerDisplay = document.getElementById("timer");
+    const longestMessageDisplay = document.getElementById("longest-message-display");
+    const longestMessageText = document.getElementById("longest-message");
+
+    function updateTimer() {
+        fetch('/timer-status')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Timer data received:", data);  
+                if (data.timerActive) {
+                    timerDisplay.textContent = `Time Left: ${data.timeLeft} seconds`;
+                    longestMessageDisplay.style.display = "none";
+                } else {
+                    timerDisplay.textContent = "Timer ended";
+                    longestMessageText.textContent = data.longestMessage;  
+                    longestMessageDisplay.style.display = "block";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching timer status:', error);
+            });
+    }
+
+    setInterval(updateTimer, 1000);
+
+
 });
 
