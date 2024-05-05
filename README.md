@@ -8,6 +8,11 @@ ubsharecse.com
 IMPORTANT NOTE: The application does not work on Firefox browsers. We are not sure why, but it won't let more than one user post at a time. It was tested on Chrome, Edge, and Safari and it works successfully on all three of those.
 
 
+Project Part 3 AO1
+Timing Feature Description:
+The app starts a timer any time someone logs into the site as long as there isn't a timer currently running. If someone logs in while a timer is running, that same timer does not change. Once a timer runs out and anyone logs in, a new 1 minute timer starts. Once a timer ends, the site will display the longest message that exists in the chat database at the top of the page.
+
+
 Project Part 3 AO3
 Documentation for extra feature:
 The feature adds two new coloring modes for the website: dark mode and gamer mode.
