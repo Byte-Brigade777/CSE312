@@ -1,17 +1,23 @@
 from flask import Flask, jsonify, render_template, url_for, request, redirect, Response, make_response, \
     send_from_directory, send_file
 from pymongo import MongoClient
-from Backend.database import loginAndRegisterDataBase, postContent
+from Backend.database import loginAndRegisterDataBase, postContent, findLongestMessage
 from Backend.Login import LoginAndRegistration
 from Backend.postInformation import StoreInformation
 import logging
 import os
 from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
+import threading
 import html
 
 app = Flask(__name__, static_url_path='/static')
 accountInfo = LoginAndRegistration(loginAndRegisterDataBase())
 post_info = StoreInformation(postContent(), accountInfo)
+
+timer = datetime.min
+largestMessage = ""
+longMessageLength = 0
 
 UPLOAD_FOLDER = 'static/img'
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, UPLOAD_FOLDER)
@@ -62,9 +68,13 @@ def home_page():
         response = make_response(redirect('/Home'))
      
         response.set_cookie('token', info[1], httponly=True, max_age=3600)
+        timerStartCheck()
         return response
 
     return redirect('/')
+
+
+
 
 
 @app.route('/Home', methods=['GET', 'POST'])
@@ -149,24 +159,76 @@ def upload_file():
         return jsonify({'message': 'File type not allowed'}), 400
     elif request.method == 'GET':
         return render_template('upload.html')
+    
+    
+def timerStartCheck():
+    global timer, largestMessage, longMessageLength
+    current = datetime.now()
+    if current >= timer:  
+        timer = current + timedelta(minutes=1)
+        largestMessage = "" 
+        longMessageLength = 0 
+        threading.Timer(60, timerReset).start()
+def timerReset():
+    global timer, largestMessage, longMessageLength
+    timer = datetime.min
+    largestMessage = findLongestMessage()
+    longMessageLength = len(largestMessage) if largestMessage else 0
+
+@app.route('/post-message', methods=['POST'])
+def messagePost():
+    global largestMessage, longMessageLength
+    current = datetime.now()
+    if current <= timer:
+        content = request.json.get('content', '')
+        if len(content) > longMessageLength:
+            largestMessage = content
+            longMessageLength = len(content)
+        return jsonify({"message": "Message received"}), 200
+    return jsonify({"error": "Timer has ended, cannot post message"}), 403
+
+@app.route('/timer-status', methods=['GET'])
+def statusTimer():
+    global timer, largestMessage
+    current = datetime.now()
+    if current < timer:
+        time_left = int((timer - current).total_seconds())
+        print("Timer is active, time left:", time_left)  
+        return jsonify({"timerActive": True, "timeLeft": time_left}), 200
+    else:
+        print("Timer ended, longest message:", largestMessage) 
+        return jsonify({"timerActive": False, "longestMessage": largestMessage}), 200
+
+
+
+@app.route('/add-message', methods=['POST'])
+def add_message():
+    global messages
+    current = datetime.now()
+    if current <= timer:
+        content = request.json.get('content', '')
+        messages.append(content)
+        return jsonify({"message": "Message added successfully"}), 200
+    return jsonify({"error": "Timer has ended, cannot add message"}), 403
+
+@app.route('/get-longest-message', methods=['GET'])
+def longestMessageGet():
+    largestMessage = findLongestMessage()
+    return jsonify({"longestMessage": largestMessage})
+
 
 def allowed_file(filename):
   ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# @app.route('/static/js/<path:filename>')
-# def send_js(filename):
-#     app.logger.info("It got called")
-#     return send_file('static/js/' + filename)
 
 
-# @app.route('/static/css/<path:filename>')
-# def send_css(filename):
-#     return send_file('static/css/' + filename, mimetype='text/css')
+
 
 
 if __name__ == "__main__":
-    # Please do not set debug=True in production
     app.run(host="0.0.0.0", port=8080, debug=True)
     app.logger.setLevel(logging.DEBUG)
+ 
+

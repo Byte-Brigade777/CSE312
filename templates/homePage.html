@@ -17,14 +17,22 @@
             <button id="gamer-mode-toggle">Gamer Mode</button>
             <button class="logout-button">Logout</button>
         </div>
+        <div class="timer-display">
+            <h2>Time Left: <span id="timer">1:00</span></h2>
+        </div>
+
+        <div id="longest-message-display" style="display: none;">
+            <h2>Longest Message:</h2>
+            <p id="longest-message"></p>
+        </div>
         <div class="content" id="posts-container">
         </div>
         <div class="user-post-block">
-            <form method="POST" enctype="multipart/form-data"> 
+            <form method="POST" enctype="multipart/form-data">
                 <div class="user-post-header">
                     {{Username}}
                 </div>
-                <div class="input-container"> 
+                <div class="input-container">
                     <input type="text" placeholder="Title" class="post-title-input">
                     <textarea placeholder="Content" class="post-content-input"></textarea>
 
